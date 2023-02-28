@@ -10,7 +10,6 @@ export default {
       operator: "",
       validaFirstDigit: true,
       validaSecondDigit: true,
-     
     };
   },
   methods: {
@@ -53,12 +52,18 @@ export default {
               Number.parseFloat(this.secondDigit);
             break;
           case "%":
-            if (this.secondDigit == 0) {
-              result = "Division by zero is not allowed!";
+            if (/\./.test(this.firstDigit)) {
+              result = "Only whole numbers!";
+            } else if (/\./.test(this.secondDigit)) {
+              result = "Only whole numbers!";
             } else {
-              result =
-                Number.parseFloat(this.firstDigit) %
-                Number.parseFloat(this.secondDigit);
+              if (this.secondDigit == 0) {
+                result = "Division by zero is not allowed!";
+              } else {
+                result =
+                  Number.parseFloat(this.firstDigit) %
+                  Number.parseFloat(this.secondDigit);
+              }
             }
             break;
           case "**":
@@ -96,7 +101,9 @@ export default {
               v-model="firstDigit"
               @keyup="calculate"
             />
-            <span class="pt-2 w-25" v-if="!validaFirstDigit">Invalid Digit!</span>
+            <span class="pt-2 w-25" v-if="!validaFirstDigit"
+              >Invalid Digit!</span
+            >
           </div>
         </div>
         <div>
@@ -108,17 +115,30 @@ export default {
               v-model="secondDigit"
               @keyup="calculate"
             />
-            <span class="pt-2 w-25 text-rigth" v-if="!validaSecondDigit">Inválid Digit!</span>
+            <span class="pt-2 w-25 text-rigth" v-if="!validaSecondDigit"
+              >Inválid Digit!</span
+            >
           </div>
         </div>
 
         <div>
           <label> Result</label>
-          <input class="form-control w-75" type="text" v-model="result" readonly />
+          <input
+            class="form-control w-75"
+            type="text"
+            v-model="result"
+            readonly
+          />
         </div>
         <div class="mt-3">
           <label for="calculato" class="form-label">Select Operator:</label>
-          <select id="calculator-operator" class="form-select w-50 text-center" aria-label="Default select example" v-model="operator" @change="calculate">
+          <select
+            id="calculator-operator"
+            class="form-select w-50 text-center"
+            aria-label="Default select example"
+            v-model="operator"
+            @change="calculate"
+          >
             <option value="+">Addition</option>
             <option value="-">Subtraction</option>
             <option value="/">Division</option>
@@ -127,7 +147,6 @@ export default {
             <option value="**">Power</option>
           </select>
         </div>
-        
       </fieldset>
     </form>
   </section>
@@ -136,24 +155,20 @@ export default {
 <style>
 .container {
   max-width: 550px !important;
-  background-color: #0B151C;
+  background-color: #0b151c;
 }
 form {
   height: 25rem;
- 
 }
 input,
 select {
-  background-color: #0B151C !important;
+  background-color: #0b151c !important;
   color: white !important;
   text-align: right;
-  
 }
 
 span {
   text-align: right !important;
   color: red;
- 
 }
-
 </style>
